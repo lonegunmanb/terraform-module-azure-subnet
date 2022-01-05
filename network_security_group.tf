@@ -7,8 +7,7 @@ resource "azurerm_network_security_group" "this" {
 }
 
 locals {
-  security_group_id                    = try(azurerm_network_security_group.this[0].id, var.security_group.id)
-  security_group_name                  = try(azurerm_network_security_group.this[0].name, var.security_group.name)
+  security_group_id = try(azurerm_network_security_group.this[0].id, var.security_group.id)
 }
 
 resource "azurerm_subnet_network_security_group_association" "this" {

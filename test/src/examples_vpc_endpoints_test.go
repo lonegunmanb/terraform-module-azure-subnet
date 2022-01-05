@@ -1,10 +1,11 @@
 package test
 
 import (
-	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
+
+	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 )
 
 type VpcEndpoint struct {
@@ -36,7 +37,7 @@ func TestExamplesVPCEndpoints(t *testing.T) {
 	// or else you risk parallel executions clobbering each other's state or
 	// not really running in parallel due to state locks. We can do it here
 	// because each test is in its own directory.
-    t.Parallel()
+	t.Parallel()
 
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
@@ -67,7 +68,7 @@ func TestExamplesVPCEndpoints(t *testing.T) {
 	expectedPublicSubnetCidrs := []string{"172.17.96.0/19", "172.17.128.0/19"}
 	assert.Equal(t, expectedPublicSubnetCidrs, publicSubnetCidrs)
 
-    // Get VPC ID for VPC Endpoint validation
+	// Get VPC ID for VPC Endpoint validation
 	vpcId := terraform.Output(t, terraformOptions, "vpc_id")
 
 	// Validate created Gateway VPC Endpoints
@@ -89,9 +90,9 @@ func TestExamplesVPCEndpoints(t *testing.T) {
 	assert.Equal(t, interfaceVpcEndpoints[0].PrivateDNSEnabled, true)
 	foundEC2PrivateDNSEntry := false
 	for _, entry := range interfaceVpcEndpoints[0].DNSEntry {
-	    if entry["dns_name"] == "ec2.us-east-2.amazonaws.com" && !foundEC2PrivateDNSEntry {
-	        foundEC2PrivateDNSEntry = true
-	    }
+		if entry["dns_name"] == "ec2.us-east-2.amazonaws.com" && !foundEC2PrivateDNSEntry {
+			foundEC2PrivateDNSEntry = true
+		}
 	}
 	assert.Equal(t, foundEC2PrivateDNSEntry, true)
 
@@ -101,9 +102,9 @@ func TestExamplesVPCEndpoints(t *testing.T) {
 	assert.Equal(t, interfaceVpcEndpoints[1].PrivateDNSEnabled, false)
 	foundKinesisStreamsPrivateDNSEntry := false
 	for _, entry := range interfaceVpcEndpoints[0].DNSEntry {
-	    if entry["dns_name"] == "kinesis-streams.us-east-2.amazonaws.com" && !foundKinesisStreamsPrivateDNSEntry {
-	        foundKinesisStreamsPrivateDNSEntry = true
-	    }
+		if entry["dns_name"] == "kinesis-streams.us-east-2.amazonaws.com" && !foundKinesisStreamsPrivateDNSEntry {
+			foundKinesisStreamsPrivateDNSEntry = true
+		}
 	}
 	assert.Equal(t, foundKinesisStreamsPrivateDNSEntry, false)
 

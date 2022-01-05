@@ -1,15 +1,17 @@
 variable "subnet_name" {
   type        = string
   description = "The name of the subnet. Changing this forces a new resource to be created."
+  nullable    = false
 }
 
 variable "resource_group_name" {
   type        = string
   description = "The name of the resource group in which to create the subnet. Changing this forces a new resource to be created."
+  nullable    = false
 }
 
 variable "virtual_network" {
-  type        = object({
+  type = object({
     id       = string
     name     = string
     location = string
@@ -20,6 +22,7 @@ variable "virtual_network" {
     name: The name of the virtual network.
     location: The location/region where the virtual network is created.
   EOT
+  nullable    = false
   validation {
     condition     = var.virtual_network.id != null
     error_message = "`virtual_network.id` is required."
@@ -37,6 +40,7 @@ variable "virtual_network" {
 variable "address_prefixes" {
   type        = list(string)
   description = "The address prefixes to use for the subnet."
+  nullable    = false
   validation {
     condition     = length(var.address_prefixes) > 0
     error_message = "`address_prefixes` requires 1 item minimum, but config has only 0 declared."
@@ -44,8 +48,8 @@ variable "address_prefixes" {
 }
 
 variable "subnet_delegation" {
-  type        = object({
-    name               = string
+  type = object({
+    name = string
     service_delegation = object({
       name    = string
       actions = list(string)
@@ -77,12 +81,14 @@ variable "enforce_private_link_endpoint_network_policies" {
   type        = bool
   default     = false
   description = "Enable or Disable network policies for the private link endpoint on the subnet. Setting this to `true` will **Disable** the policy and setting this to `false` will **Enable** the policy. Default value is `false`."
+  nullable    = false
 }
 
 variable "enforce_private_link_service_network_policies" {
   type        = bool
   default     = false
   description = "Enable or Disable network policies for the private link service on the subnet. Setting this to `true` will **Disable** the policy and setting this to `false` will **Enable** the policy. Default value is `false`."
+  nullable    = false
 }
 
 variable "service_endpoints" {
@@ -104,18 +110,24 @@ variable "new_route_table_name" {
 }
 
 variable "route_table" {
-  type        = object({
-    id = string
+  type = object({
+    id   = string
+    name = string
   })
   default     = null
   description = <<-EOT
     Leave this parameter null would create a new route table.
     id: The ID of the Route Table which should be associated with the Subnet. Changing this forces a new route table association to be created.
+    name: The name of the route table. Changing this forces a new route table association to be created.
   EOT
+  validation {
+    condition     = var.route_table == null ? true : var.route_table.id != null
+    error_message = "`route_table.id` is required when `route_table` is not null."
+  }
 }
 
 variable "security_group" {
-  type        = object({
+  type = object({
     id   = string
     name = string
   })
@@ -123,15 +135,20 @@ variable "security_group" {
   description = <<-EOT
     Leave this parameter null would create a new Network Security Group.
     id: The ID of the Network Security Group which should be associated with the Subnet. Changing this forces a new association to be created.
+    name: Specifies the name of the network security group. Changing this forces a new association to be created.
   EOT
   validation {
     condition     = var.security_group == null ? true : var.security_group.id != null
     error_message = "`security_group.id` is required when `security_group` is not null."
   }
+  validation {
+    condition     = var.security_group == null ? true : var.security_group.name != null
+    error_message = "`security_group.name` is required when `security_group` is not null."
+  }
 }
 
 variable "nat_gateway" {
-  type        = object({
+  type = object({
     id = string
   })
   default     = null
