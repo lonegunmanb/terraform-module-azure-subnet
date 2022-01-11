@@ -1,6 +1,9 @@
 # Compiled files
 *.tfstate
 *.tfstate.backup
+*.terraform.lock.hcl
+*.override.tf
+override.tf
 
 # Module directory
 .terraform
