@@ -2,14 +2,15 @@ provider "azurerm" {
   features {}
 }
 
+resource "random_pet" "example" {}
+
 module "label" {
   source         = "registry.terraform.io/cloudposse/label/null"
-  namespace      = var.namespace
-  name           = "subnet-module"
+  name           = "subnet-module-${random_pet.example.id}"
   delimiter      = "-"
   label_key_case = "lower"
   tags = {
-    author = var.namespace
+    author = "example"
   }
 }
 
@@ -20,7 +21,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  address_space       = ["10.0.0.0/16"]
+  address_space       = var.vnet_cidrs
   name                = "${module.label.id}-vnet"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -98,20 +99,6 @@ resource "azurerm_network_security_rule" "allow_public_subnet_tcp_outbound_from_
   destination_port_range      = "*"
   timeouts {
     read = "1m"
-  }
-}
-
-resource "azurerm_network_interface" "private_nic" {
-  depends_on = [
-    module.private,
-  ]
-  location            = azurerm_resource_group.rg.location
-  name                = "${module.label.id}-private-nic"
-  resource_group_name = azurerm_resource_group.rg.name
-  ip_configuration {
-    name                          = "private"
-    subnet_id                     = module.private.subnet_id
-    private_ip_address_allocation = "Dynamic"
   }
 }
 

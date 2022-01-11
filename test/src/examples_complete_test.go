@@ -2,10 +2,8 @@ package test
 
 import (
 	"path/filepath"
-	"strings"
 	"testing"
 
-	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
@@ -19,10 +17,12 @@ func TestExamplesComplete(t *testing.T) {
 	// each in its own directory.
 	t.Parallel()
 
-	attributes := []string{random.UniqueId()}
 	rootFolder := "../../"
 	terraformFolderRelativeToRoot := "examples/complete"
-	varFiles := []string{"fixtures.us-east-2.tfvars"}
+
+	vars := map[string]interface{}{
+		"vnet_cidrs": []string{"10.0.0.0/16"},
+	}
 
 	testFolder := filepath.Join(rootFolder, terraformFolderRelativeToRoot)
 
@@ -31,30 +31,17 @@ func TestExamplesComplete(t *testing.T) {
 		TerraformDir: testFolder,
 		Upgrade:      true,
 		// Variables to pass to our Terraform code using -var-file options
-		VarFiles: varFiles,
-		Vars: map[string]interface{}{
-			"attributes": attributes,
-		},
+		//VarFiles: varFiles,
+		Vars: vars,
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
 	defer terraform.Destroy(t, terraformOptions)
 
-	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
-	terraform.InitAndApply(t, terraformOptions)
+	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors, then run `terraform
+	terraform.InitAndApplyAndIdempotent(t, terraformOptions)
 
 	// Verify we're getting back the VPC CIDR Block we expect
-	vpcCidr := terraform.Output(t, terraformOptions, "vpc_cidr")
-	expectedVpcCidr := "172.16.0.0/16"
-	assert.Equal(t, expectedVpcCidr, strings.Trim(vpcCidr, "\""))
-
-	// Verify we're getting back the public Subnet CIDR Blocks we expect
-	privateSubnetCidrs := terraform.OutputList(t, terraformOptions, "private_subnet_cidrs")
-	expectedPrivateSubnetCidrs := []string{"172.16.0.0/19", "172.16.32.0/19"}
-	assert.Equal(t, expectedPrivateSubnetCidrs, privateSubnetCidrs)
-
-	// Verify we're getting back the private Subnet CIDR Blocks we expect
-	publicSubnetCidrs := terraform.OutputList(t, terraformOptions, "public_subnet_cidrs")
-	expectedPublicSubnetCidrs := []string{"172.16.96.0/19", "172.16.128.0/19"}
-	assert.Equal(t, expectedPublicSubnetCidrs, publicSubnetCidrs)
+	privateSubnetId := terraform.Output(t, terraformOptions, "private_subnet_id")
+	assert.NotEqual(t, "", privateSubnetId)
 }

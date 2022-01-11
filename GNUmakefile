@@ -19,10 +19,6 @@ tools:
 	go install mvdan.cc/gofumpt@latest
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH || $$GOPATH)/bin v1.41.1
 
-
-build: fmtcheck generate
-	go install
-
 fmt:
 	@echo "==> Fixing source code with gofmt..."
 	# This logic should match the search logic in scripts/gofmtcheck.sh
@@ -44,10 +40,6 @@ terrafmt:
 	@find internal | egrep "_test.go" | sort | while read f; do terrafmt fmt -f $$f; done
 	@echo "==> Fixing website terraform blocks code with terrafmt..."
 	@find . | egrep html.markdown | sort | while read f; do terrafmt fmt $$f; done
-
-generate:
-	go generate ./internal/services/...
-	go generate ./internal/provider/
 
 goimports:
 	@echo "==> Fixing imports code with goimports..."
@@ -72,9 +64,6 @@ gencheck:
 	@echo "==> Comparing generated code to committed code..."
 	@git diff --compact-summary --exit-code -- ./ || \
     		(echo; echo "Unexpected difference in generated code. Run 'make generate' to update the generated code and commit."; exit 1)
-
-tflint:
-	./scripts/run-tflint.sh
 
 whitespace:
 	@echo "==> Fixing source code with whitespace linter..."
