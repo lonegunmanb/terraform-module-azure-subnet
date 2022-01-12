@@ -66,6 +66,13 @@ module "private" {
   nat_gateway = {
     id = azurerm_nat_gateway.private_nat_gw.id
   }
+  subnet_delegation = {
+    name = "delegation"
+    service_delegation = {
+      name    = "Microsoft.ContainerInstance/containerGroups"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
 }
 
 resource "azurerm_network_security_rule" "allow_public_subnet_tcp_inbound_to_private" {

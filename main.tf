@@ -6,10 +6,10 @@ resource "azurerm_subnet" "this" {
   dynamic "delegation" {
     for_each = var.subnet_delegation == null ? [] : toset([""])
     content {
-      name = var.subnet_delegation.name
+      name = var.subnet_delegation["name"]
       service_delegation {
-        name    = var.subnet_delegation.service_delegation.name
-        actions = var.subnet_delegation.service_delegation.actions
+        name    = var.subnet_delegation["service_delegation"]["name"]
+        actions = var.subnet_delegation["service_delegation"]["actions"]
       }
     }
   }

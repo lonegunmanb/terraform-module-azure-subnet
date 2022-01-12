@@ -48,13 +48,14 @@ variable "address_prefixes" {
 }
 
 variable "subnet_delegation" {
-  type = object({
-    name = string
-    service_delegation = object({
-      name    = string
-      actions = list(string)
-    })
-  })
+  #  type = object({
+  #    name = string
+  #    service_delegation = object({
+  #      name    = string
+  #      actions = list(string)
+  #    })
+  #  })
+  type        = map
   default     = null
   description = <<-EOT
     Details: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet#delegation
@@ -64,16 +65,28 @@ variable "subnet_delegation" {
       actions: The name of service to delegate to. Possible values include
   EOT
   validation {
-    condition     = var.subnet_delegation == null ? true : var.subnet_delegation.name != null
+    condition     = var.subnet_delegation == null ? true : var.subnet_delegation["name"] != null
     error_message = "`subnet_delegation.name` is required when `subnet_delegation` is not null."
   }
   validation {
-    condition     = var.subnet_delegation == null ? true : var.subnet_delegation.service_delegation != null
+    condition     = var.subnet_delegation == null ? true : var.subnet_delegation["service_delegation"] != null
     error_message = "`subnet_delegation.service_delegation` is required when `subnet_delegation` is not null."
   }
   validation {
-    condition     = var.subnet_delegation == null ? true : var.subnet_delegation.service_delegation.name != null
+    condition     = var.subnet_delegation == null ? true : can(tomap(var.subnet_delegation["service_delegation"]))
+    error_message = "`subnet_delegation.service_delegation` must be a map."
+  }
+  validation {
+    condition     = var.subnet_delegation == null ? true : var.subnet_delegation["service_delegation"]["name"] != null
     error_message = "`subnet_delegation.service_delegation.name` is required when `subnet_delegation` is not null."
+  }
+  validation {
+    condition     = var.subnet_delegation == null ? true : can(tolist(var.subnet_delegation["service_delegation"]["actions"]))
+    error_message = "`subnet_delegation.service_delegation.actions` must be a list of string."
+  }
+  validation {
+    condition     = var.subnet_delegation == null ? true : var.subnet_delegation["service_delegation"]["actions"] == null ? true : (can([for action in tolist(var.subnet_delegation["service_delegation"]["actions"]) : tostring(action)]))
+    error_message = "`subnet_delegation.service_delegation.actions` must be a list of string."
   }
 }
 
@@ -110,10 +123,11 @@ variable "new_route_table_name" {
 }
 
 variable "route_table" {
-  type = object({
-    id   = string
-    name = string
-  })
+  #  type = object({
+  #    id   = string
+  #    name = string
+  #  })
+  type        = map(string)
   default     = null
   description = <<-EOT
     Leave this parameter null would create a new route table.
@@ -121,16 +135,21 @@ variable "route_table" {
     name: The name of the route table. Changing this forces a new route table association to be created.
   EOT
   validation {
-    condition     = var.route_table == null ? true : var.route_table.id != null
+    condition     = var.route_table == null ? true : var.route_table["id"] != null
     error_message = "`route_table.id` is required when `route_table` is not null."
+  }
+  validation {
+    condition     = var.route_table == null ? true : var.route_table["name"] != null
+    error_message = "`route_table.name` is required when `route_table` is not null."
   }
 }
 
 variable "security_group" {
-  type = object({
-    id   = string
-    name = string
-  })
+  #  type = object({
+  #    id   = string
+  #    name = string
+  #  })
+  type        = map(string)
   default     = null
   description = <<-EOT
     Leave this parameter null would create a new Network Security Group.
@@ -138,25 +157,26 @@ variable "security_group" {
     name: Specifies the name of the network security group. Changing this forces a new association to be created.
   EOT
   validation {
-    condition     = var.security_group == null ? true : var.security_group.id != null
+    condition     = var.security_group == null ? true : var.security_group["id"] != null
     error_message = "`security_group.id` is required when `security_group` is not null."
   }
   validation {
-    condition     = var.security_group == null ? true : var.security_group.name != null
+    condition     = var.security_group == null ? true : var.security_group["name"] != null
     error_message = "`security_group.name` is required when `security_group` is not null."
   }
 }
 
 variable "nat_gateway" {
-  type = object({
-    id = string
-  })
+  #  type = object({
+  #    id = string
+  #  })
+  type        = map(string)
   default     = null
   description = <<-EOT
     id: The ID of the NAT Gateway which should be associated with the Subnet. Changing this forces a new resource to be created.
   EOT
   validation {
-    condition     = var.nat_gateway == null ? true : var.nat_gateway.id != null
+    condition     = var.nat_gateway == null ? true : var.nat_gateway["id"] != null
     error_message = "`nat_gateway.id` is required when `nat_gateway` is not null."
   }
 }
