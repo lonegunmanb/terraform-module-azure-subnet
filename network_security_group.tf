@@ -12,6 +12,6 @@ locals {
 }
 
 resource "azurerm_subnet_network_security_group_association" "this" {
-  network_security_group_id =   local.security_group_id
+  network_security_group_id = local.security_group_id
   subnet_id                 = azurerm_subnet.this.id
 }
