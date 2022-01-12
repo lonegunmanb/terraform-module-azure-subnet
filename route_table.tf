@@ -5,8 +5,10 @@ resource "azurerm_route_table" "this" {
   resource_group_name = var.resource_group_name
 }
 
+
 locals {
-  route_table_id = try(azurerm_route_table.this[0].id, var.route_table.id)
+  route_table_id   = local.create_new_route_table ? azurerm_route_table.this[0].id : var.route_table.id
+  route_table_name = local.create_new_route_table ? azurerm_route_table.this[0].name : var.route_table.name
 }
 
 resource "azurerm_subnet_route_table_association" "this" {

@@ -24,6 +24,13 @@ fmt:
 	# This logic should match the search logic in scripts/gofmtcheck.sh
 	find . -name '*.go' | grep -v vendor | xargs gofmt -s -w
 
+tffmt:
+	@echo "==> Formatting terraform code..."
+	terraform fmt -recursive
+
+tffmtcheck:
+	terraform fmt -recursive -check
+
 fumpt:
 	@echo "==> Fixing source code with Gofumpt..."
 	# This logic should match the search logic in scripts/gofmtcheck.sh

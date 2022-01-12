@@ -4,5 +4,5 @@ docker run --rm -v ${pwd}/../../:/src -w="/src/examples/complete" -e ARM_CLIENT_
 ```
 
 ```shell
-docker run --rm -v $(pwd)/../../:/src -w="/src/examples/complete" -e ARM_CLIENT_ID=$ARM_CLIENT_ID -e ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET -e ARM_TENANT_ID=$ARM_TENANT_ID -e ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID tfmodule-testrunner terraform apply -auto-approve
+docker run --rm -v $(pwd)/../../:/e2e -w="/src/examples/complete" -e ARM_CLIENT_ID=$ARM_CLIENT_ID -e ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET -e ARM_TENANT_ID=$ARM_TENANT_ID -e ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID tfmodule-testrunner terraform apply -auto-approve
 ```
