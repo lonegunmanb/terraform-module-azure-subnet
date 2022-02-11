@@ -43,7 +43,7 @@ variable "address_prefixes" {
   nullable    = false
   validation {
     condition     = length(var.address_prefixes) > 0
-    error_message = "`address_prefixes` requires 1 item minimum, but config has only 0 declared."
+    error_message = "`address_prefixes` requires 1 item minimum, 0 got."
   }
 }
 

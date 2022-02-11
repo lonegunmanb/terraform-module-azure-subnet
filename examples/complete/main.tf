@@ -6,6 +6,7 @@ resource "random_pet" "example" {}
 
 module "label" {
   source         = "registry.terraform.io/cloudposse/label/null"
+  version        = "0.25.0"
   name           = "subnet-module-${random_pet.example.id}"
   delimiter      = "-"
   label_key_case = "lower"
@@ -80,9 +81,6 @@ resource "azurerm_network_security_rule" "allow_public_subnet_tcp_inbound_to_pri
   source_port_range           = "*"
   destination_address_prefix  = "VirtualNetwork"
   destination_port_range      = "*"
-  timeouts {
-    read = "1m"
-  }
 }
 
 resource "azurerm_network_security_rule" "allow_public_subnet_tcp_outbound_from_private" {
@@ -97,9 +95,6 @@ resource "azurerm_network_security_rule" "allow_public_subnet_tcp_outbound_from_
   source_port_range           = "*"
   destination_address_prefix  = "VirtualNetwork"
   destination_port_range      = "*"
-  timeouts {
-    read = "1m"
-  }
 }
 
 module "public" {
@@ -133,9 +128,6 @@ resource "azurerm_network_security_rule" "allow_internet_to_public" {
   source_port_range           = "*"
   destination_address_prefix  = "*"
   destination_port_range      = "*"
-  timeouts {
-    read = "1m"
-  }
 }
 
 resource "azurerm_network_security_rule" "allow_internet_from_public" {
@@ -150,7 +142,4 @@ resource "azurerm_network_security_rule" "allow_internet_from_public" {
   source_port_range           = "*"
   destination_address_prefix  = "Internet"
   destination_port_range      = "*"
-  timeouts {
-    read = "1m"
-  }
 }

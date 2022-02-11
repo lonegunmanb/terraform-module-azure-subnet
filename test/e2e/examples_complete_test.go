@@ -1,11 +1,10 @@
-package test
+package e2e_test
 
 import (
 	"testing"
 
-	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
-
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,16 +16,12 @@ func TestExamplesComplete(t *testing.T) {
 	terraformFolderRelativeToRoot := "examples/complete"
 	terraformDir := test_structure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
 
-	vars := map[string]interface{}{
-		"vnet_cidrs": []string{"10.0.0.0/16"},
-	}
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: terraformDir,
 		Upgrade:      true,
 		// Variables to pass to our Terraform code using -var-file options
-		//VarFiles: varFiles,
-		Vars: vars,
+		VarFiles: []string{"../../examples/complete/fixtures.us-east.tfvars"},
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created

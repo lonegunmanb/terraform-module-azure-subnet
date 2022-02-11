@@ -1,6 +1,6 @@
 resource "azurerm_network_security_group" "this" {
   count               = local.create_new_security_group ? 1 : 0
-  name                = local.new_network_security_group_name
+  name                = coalesce(var.new_network_security_group_name, "${var.subnet_name}-nsg")
   resource_group_name = var.resource_group_name
   location            = local.location
   tags                = var.new_network_security_group_tags

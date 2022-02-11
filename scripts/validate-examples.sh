@@ -2,7 +2,7 @@
 
 echo "==> Checking examples validate with 'terraform validate'..."
 
-exampleDirs=$(find ./examples -mindepth 2 -maxdepth 2 -type d '!' -exec test -e "{}/*.tf" ';' -print | sort)
+exampleDirs=$(find ./examples -mindepth 1 -maxdepth 2 -type d '!' -exec test -e "{}/*.tf" ';' -print | grep -v ".terraform" | sort)
 examplesWithErrors=()
 hasError=false
 

@@ -1,10 +1,9 @@
 resource "azurerm_route_table" "this" {
   count               = local.create_new_route_table ? 1 : 0
   location            = local.location
-  name                = local.new_route_table_name
+  name                = coalesce(var.new_route_table_name, "${var.subnet_name}-rt")
   resource_group_name = var.resource_group_name
 }
-
 
 locals {
   route_table_id   = local.create_new_route_table ? azurerm_route_table.this[0].id : var.route_table.id

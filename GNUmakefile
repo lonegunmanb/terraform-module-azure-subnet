@@ -1,6 +1,4 @@
 TEST?=$$(go list ./... |grep -v 'vendor'|grep -v 'examples')
-WEBSITE_REPO=github.com/hashicorp/terraform-website
-PKG_NAME=azurerm
 TESTTIMEOUT=180m
 
 .EXPORT_ALL_VARIABLES:
@@ -12,48 +10,59 @@ tools:
 	@echo "==> installing required tooling..."
 	@sh "$(CURDIR)/scripts/gogetcookie.sh"
 	go install github.com/client9/misspell/cmd/misspell@latest
-	go install github.com/bflad/tfproviderlint/cmd/tfproviderlint@latest
-	go install github.com/bflad/tfproviderdocs@latest
 	go install github.com/katbyte/terrafmt@latest
 	go install golang.org/x/tools/cmd/goimports@latest
 	go install mvdan.cc/gofumpt@latest
+	go install github.com/bflad/tfproviderlint/cmd/tfproviderlint@latest
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH || $$GOPATH)/bin v1.41.1
+	curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
 fmt:
 	@echo "==> Fixing source code with gofmt..."
 	# This logic should match the search logic in scripts/gofmtcheck.sh
 	find . -name '*.go' | grep -v vendor | xargs gofmt -s -w
 
+fumpt:
+	@echo "==> Fixing source code with Gofumpt..."
+	# This logic should match the search logic in scripts/gofmtcheck.sh
+	find . -name '*.go' | grep -v vendor | xargs gofumpt -w
+
 tffmt:
 	@echo "==> Formatting terraform code..."
 	terraform fmt -recursive
 
 tffmtcheck:
-	terraform fmt -recursive -check
+	@sh "$(CURDIR)/scripts/terraform-fmt.sh"
 
-fumpt:
-	@echo "==> Fixing source code with Gofumpt..."
-	# This logic should match the search logic in scripts/gofmtcheck.sh
-	find . -name '*.go' | grep -v vendor | xargs gofumpt -s -w
+tfvalidatecheck:
+	@sh "$(CURDIR)/scripts/terraform-validate.sh"
+
+terrafmtcheck:
+	@sh "$(CURDIR)/scripts/terrafmt-check.sh"
 
 # Currently required by tf-deploy compile, duplicated by linters
-fmtcheck:
+gofmtcheck:
 	@sh "$(CURDIR)/scripts/gofmtcheck.sh"
-	@sh "$(CURDIR)/scripts/timeouts.sh"
-	@sh "$(CURDIR)/scripts/check-test-package.sh"
+	@sh "$(CURDIR)/scripts/fumptcheck.sh"
+
+golint:
+	./scripts/run-golangci-lint.sh
+
+tflint:
+	./scripts/run-tflint.sh
+
+fmtcheck: tfvalidatecheck tffmtcheck gofmtcheck terrafmtcheck
+
+pr-check: fmtcheck golint tflint
 
 terrafmt:
-	@echo "==> Fixing acceptance test terraform blocks code with terrafmt..."
-	@find internal | egrep "_test.go" | sort | while read f; do terrafmt fmt -f $$f; done
-	@echo "==> Fixing website terraform blocks code with terrafmt..."
-	@find . | egrep html.markdown | sort | while read f; do terrafmt fmt $$f; done
+	@echo "==> Fixing test and document terraform blocks code with terrafmt..."
+	@find . -name '*.md' -o -name "*.go" | grep -v -e '.github' -e '.terraform' -e 'vendor' | while read f; do terrafmt fmt -f $$f; done
 
 goimports:
 	@echo "==> Fixing imports code with goimports..."
-	@find . -name '*.go' | grep -v vendor | grep -v generator-resource-id | while read f; do ./scripts/goimport-file.sh "$$f"; done
+	@find . -name '*.go' | grep -v vendor | while read f; do ./scripts/goimport-file.sh "$$f"; done
 
-lint:
-	./scripts/run-lint.sh
 
 depscheck:
 	@echo "==> Checking source code with go mod tidy..."
@@ -100,6 +109,5 @@ debugacc: fmtcheck
 validate-examples:
 	./scripts/validate-examples.sh
 
-pr-check: generate build test lint tflint website-lint
 
 .PHONY: build test testacc vet fmt fmtcheck errcheck pr-check scaffold-website test-compile website website-test validate-examples

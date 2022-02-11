@@ -117,7 +117,7 @@ module "dynamic_subnets" {
   namespace          = "eg"
   stage              = "test"
   name               = "app"
-  availability_zones = ["us-west-2a","us-west-2b","us-west-2c"]
+  availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
   vpc_id             = module.vpc.vpc_id
   igw_id             = module.vpc.igw_id
   cidr_block         = "10.0.0.0/16"
