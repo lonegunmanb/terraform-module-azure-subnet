@@ -8,7 +8,7 @@ gofmt_files=$(find . -name '*.go' | grep -v vendor | xargs gofumpt -l)
 if [ -n "${gofmt_files}" ]; then
     echo 'gofumpt needs running on the following files:'
     echo "${gofmt_files}"
-    echo "You can use the command: \`make gofumpt\` to reformat code."
+    echo "You can use the command: \`make fumpt\` to reformat code."
     exit 1
 fi
 

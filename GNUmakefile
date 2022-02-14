@@ -51,9 +51,18 @@ golint:
 tflint:
 	./scripts/run-tflint.sh
 
+lint: golint tflint
+
+checkovcheck:
+	@echo "==> Checking Terraform code with BridgeCrew Checkov"
+	checkov --skip-framework dockerfile --quiet -d ./
+
 fmtcheck: tfvalidatecheck tffmtcheck gofmtcheck terrafmtcheck
 
-pr-check: fmtcheck golint tflint
+pr-check: fmtcheck lint checkovcheck
+
+e2e-test:
+	./scripts/run-e2e-test.sh
 
 terrafmt:
 	@echo "==> Fixing test and document terraform blocks code with terrafmt..."

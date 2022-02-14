@@ -6,7 +6,7 @@ terraform init -upgrade && terraform validate || error=true
 echo "==> Checking examples terraform codes are validate..."
 examples=$(find ./examples -maxdepth 1 -mindepth 1 -type d)
 for d in $examples; do
-  (echo "===> Terraform validating in " $d && cd $d && terraform init -upgrade && terraform validate  || error=true)
+  (echo "===> Terraform validating in " $d && cd $d && rm .terraform.lock.hcl && terraform init -upgrade && terraform validate  || error=true)
 done
 
 
