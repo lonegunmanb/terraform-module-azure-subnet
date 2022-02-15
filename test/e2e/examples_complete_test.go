@@ -32,7 +32,6 @@ func TestExamplesComplete(t *testing.T) {
 
 	privateSubnetId := terraform.Output(t, terraformOptions, "private_subnet_id")
 	assert.NotEqual(t, "", privateSubnetId)
-	t.Fail()
 }
 
 func TestExamplesComplete2(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/cloudposse/terraform-aws-vpc
+module github.com/Azure/terraform-azue-subnet
 
 go 1.16
 
