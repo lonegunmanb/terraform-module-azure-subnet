@@ -2,7 +2,7 @@
 
 function runLinters {
   echo "==> Checking test go code against linters..."
-  (cd ./test && golangci-lint run --timeout 1h ./...)
+  (cd ./test && go mod tidy && golangci-lint run --timeout 1h ./...)
 }
 
 function main {

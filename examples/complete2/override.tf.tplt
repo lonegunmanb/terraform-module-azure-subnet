@@ -1,0 +1,16 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "{{ env "TERRAFORM_AZURERM_VERSION" | default ">= 2.90.0"}}"
+    }
+  }
+}
+
+module "private" {
+  source = "{{env "MODULE_SOURCE" |  default "../../"}}"
+}
+
+module "public" {
+  source = "{{env "MODULE_SOURCE" |  default "../../"}}"
+}
