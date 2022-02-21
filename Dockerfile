@@ -8,7 +8,7 @@ COPY GNUmakefile /src/GNUmakefile
 COPY scripts /src/scripts
 
 RUN apt update && \
-    apt install -y zip python3 pip && \
+    apt install -y zip python3 pip jq && \
     make tools && \
     pip install checkov && \
     export ARCH=$(uname -m | sed 's/x86_64/amd64/g') && \
@@ -20,5 +20,6 @@ RUN apt update && \
 	mkdir -p ~/.tflint.d/plugins/github.com/terraform-linters/tflint-ruleset-azurerm/$TFLINT_AZURERM_VERSION && \
 	unzip -q -d ~/.tflint.d/plugins/github.com/terraform-linters/tflint-ruleset-azurerm/$TFLINT_AZURERM_VERSION /tmp/tflint-ruleset-azurerm.zip && \
 	rm -f /tmp/terraform.zip && \
-	rm -f /tmp/consul-template.zip
+	rm -f /tmp/consul-template.zip && \
+    rm -rf /src
 
