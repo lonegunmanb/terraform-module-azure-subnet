@@ -57,7 +57,7 @@ func TestExamplesUpgrade(t *testing.T) {
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors, then run `terraform
 	terraform.InitAndApplyAndIdempotent(t, terraformOptions)
 
-	cmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("MODULE_SOURCE=git@github.com:lonegunmanb/terraform-module-azure-subnet.git?ref=6fb7fb1923e2bdfa7ff41c8a493834684a4b901c && sprig-cli -tmpl %[1]s/override.tf.tplt > %[1]s/override.tf", terraformDir))
+	cmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("MODULE_SOURCE=/src && sprig-cli -tmpl %[1]s/override.tf.tplt > %[1]s/override.tf", terraformDir))
 	_, err := cmd.Output()
 	if err != nil {
 		assert.Fail(t, err.Error())
