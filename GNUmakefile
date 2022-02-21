@@ -65,6 +65,9 @@ pr-check: fmtcheck lint checkovcheck
 e2e-test:
 	./scripts/run-e2e-test.sh
 
+version-upgrade-test:
+	./scripts/version-upgrade-test.sh
+
 terrafmt:
 	@echo "==> Fixing test and document terraform blocks code with terrafmt..."
 	@find . -name '*.md' -o -name "*.go" | grep -v -e '.github' -e '.terraform' -e 'vendor' | while read f; do terrafmt fmt -f $$f; done
