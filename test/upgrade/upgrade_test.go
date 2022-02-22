@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os/exec"
-	"strings"
 	"testing"
 
 	"github.com/ahmetb/go-linq/v3"
@@ -13,6 +12,8 @@ import (
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"github.com/hashicorp/go-getter"
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/mod/semver"
+	_ "golang.org/x/mod/semver"
 )
 
 func TestExamplesUpgrade(t *testing.T) {
@@ -30,10 +31,12 @@ func TestExamplesUpgrade(t *testing.T) {
 			return false
 		}
 		tag := t.(*github.RepositoryTag)
-		return !strings.Contains(tag.GetName(), "rc")
-	}).OrderByDescending(func(t interface{}) interface{} {
-		tag := t.(*github.RepositoryTag)
-		return tag.Name
+		v := tag.GetName()
+		return semver.IsValid(v) //&& !strings.Contains(v, "rc")
+	}).Sort(func(i, j interface{}) bool {
+		it := i.(*github.RepositoryTag)
+		jt := j.(*github.RepositoryTag)
+		return semver.Compare(it.GetName(), jt.GetName()) > 0
 	}).First().(*github.RepositoryTag).GetName()
 
 	tagDir := fmt.Sprintf("/tmp/%s", latestTag)

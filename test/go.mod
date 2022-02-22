@@ -8,4 +8,5 @@ require (
 	github.com/gruntwork-io/terratest v0.33.0
 	github.com/hashicorp/go-getter v1.5.11
 	github.com/stretchr/testify v1.5.1
+	golang.org/x/mod v0.3.0
 )
