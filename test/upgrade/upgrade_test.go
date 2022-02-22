@@ -26,7 +26,7 @@ func TestExamplesUpgrade(t *testing.T) {
 	if tags == nil {
 		t.Error("Cannot find tags")
 	}
-	latestTag := linq.From(tags).Where(func(t interface{}) bool {
+	first := linq.From(tags).Where(func(t interface{}) bool {
 		if t == nil {
 			return false
 		}
@@ -37,7 +37,11 @@ func TestExamplesUpgrade(t *testing.T) {
 		it := i.(*github.RepositoryTag)
 		jt := j.(*github.RepositoryTag)
 		return semver.Compare(it.GetName(), jt.GetName()) > 0
-	}).First().(*github.RepositoryTag).GetName()
+	}).First()
+	if first == nil {
+		t.Skipf("No previous tag yet, skip upgrade test")
+	}
+	latestTag := first.(*github.RepositoryTag).GetName()
 
 	tagDir := fmt.Sprintf("/tmp/%s", latestTag)
 	err = getter.Get(tagDir, fmt.Sprintf("github.com/lonegunmanb/terraform-module-azure-subnet?ref=%s", latestTag))
