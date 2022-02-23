@@ -31,12 +31,12 @@ resource "azurerm_virtual_network" "vnet" {
 
 resource "azurerm_route_table" "rt" {
   location            = azurerm_resource_group.rg.location
-  name                = "${module.label.id}-rt"
+  name                = "${module.label.id}-rt1"
   resource_group_name = azurerm_resource_group.rg.name
   tags                = module.label.tags
 }
 
-resource "azurerm_network_security_group" "private-nsg" {
+resource "azurerm_network_security_group" "private_nsg" {
   location            = azurerm_resource_group.rg.location
   name                = "${module.label.id}-private-nsg"
   resource_group_name = azurerm_resource_group.rg.name
@@ -60,8 +60,8 @@ module "private" {
     location = azurerm_virtual_network.vnet.location
   }
   security_group = {
-    id   = azurerm_network_security_group.private-nsg.id
-    name = azurerm_network_security_group.private-nsg.name
+    id   = azurerm_network_security_group.private_nsg.id
+    name = azurerm_network_security_group.private_nsg.name
   }
   nat_gateway = {
     id = azurerm_nat_gateway.private_nat_gw.id

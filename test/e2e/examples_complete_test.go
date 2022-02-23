@@ -9,7 +9,6 @@ import (
 )
 
 func TestExamplesComplete(t *testing.T) {
-
 	rootFolder := "../../"
 	terraformFolderRelativeToRoot := "examples/complete"
 	terraformDir := test_structure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
