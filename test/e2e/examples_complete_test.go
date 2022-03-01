@@ -5,53 +5,36 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
+	test_helper "github.com/lonegunmanb/terraform-module-test-helper"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestExamplesComplete(t *testing.T) {
-	rootFolder := "../../"
-	terraformFolderRelativeToRoot := "examples/complete"
-	terraformDir := test_structure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
+	output := test_helper.RunE2ETest(t, "../../", "examples/complete", terraform.Options{
+		Upgrade: true,
+	})
 
-	terraformOptions := &terraform.Options{
-		// The path to where our Terraform code is located
-		TerraformDir: terraformDir,
-		Upgrade:      true,
-		// Variables to pass to our Terraform code using -var-file options
-		VarFiles: []string{"../../examples/complete/fixtures.us-east.tfvars"},
-	}
-
-	// At the end of the test, run `terraform destroy` to clean up any resources that were created
-	defer terraform.Destroy(t, terraformOptions)
-
-	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors, then run `terraform
-	terraform.InitAndApplyAndIdempotent(t, terraformOptions)
-
-	privateSubnetId := terraform.Output(t, terraformOptions, "private_subnet_id")
+	privateSubnetId, ok := output["private_subnet_id"].(string)
+	assert.True(t, ok)
 	assert.NotEqual(t, "", privateSubnetId)
 }
 
 func TestExamplesComplete2(t *testing.T) {
-	// t.Parallel()
+	output := RunE2ETest(t, "../../", "examples/complete2", terraform.Options{
+		Upgrade: true,
+	})
 
-	rootFolder := "../../"
-	terraformFolderRelativeToRoot := "examples/complete2"
-	terraformDir := test_structure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
-
-	terraformOptions := &terraform.Options{
-		// The path to where our Terraform code is located
-		TerraformDir: terraformDir,
-		Upgrade:      true,
-		// Variables to pass to our Terraform code using -var-file options
-		VarFiles: []string{"../../examples/complete2/fixtures.us-east.tfvars"},
-	}
-
-	// At the end of the test, run `terraform destroy` to clean up any resources that were created
-	defer terraform.Destroy(t, terraformOptions)
-
-	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors, then run `terraform
-	terraform.InitAndApplyAndIdempotent(t, terraformOptions)
-
-	privateSubnetId := terraform.Output(t, terraformOptions, "private_subnet_id")
+	privateSubnetId, ok := output["private_subnet_id"].(string)
+	assert.True(t, ok)
 	assert.NotEqual(t, "", privateSubnetId)
+}
+
+type TerraformOutput = map[string]interface{}
+
+func RunE2ETest(t *testing.T, rootFolder, moduleFolderRelativeToRoot string, option terraform.Options) TerraformOutput {
+	terraformDir := test_structure.CopyTerraformFolderToTemp(t, rootFolder, moduleFolderRelativeToRoot)
+	option.TerraformDir = terraformDir
+	defer terraform.Destroy(t, &option)
+	terraform.InitAndApplyAndIdempotent(t, &option)
+	return terraform.OutputAll(t, &option)
 }

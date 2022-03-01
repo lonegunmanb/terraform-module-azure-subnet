@@ -1,12 +1,10 @@
-module github.com/Azure/terraform-azue-subnet
+module github.com/Azure/terraform-azure-subnet
 
 go 1.16
 
 require (
-	github.com/ahmetb/go-linq/v3 v3.2.0
-	github.com/google/go-github/v42 v42.0.0
-	github.com/gruntwork-io/terratest v0.33.0
-	github.com/hashicorp/go-getter v1.5.11
-	github.com/stretchr/testify v1.5.1
-	golang.org/x/mod v0.3.0
+	github.com/gruntwork-io/terratest v0.40.3
+	github.com/hashicorp/go-getter v1.5.11 // indirect
+	github.com/lonegunmanb/terraform-module-test-helper v0.0.0-20220301071245-a376d1a3cb87 // indirect
+	github.com/stretchr/testify v1.7.0
 )
