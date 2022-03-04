@@ -23,7 +23,7 @@ categories:
 #logo: docs/logo.png
 
 # License of this project
-license: "APACHE2"
+license: "MIT"
 
 # Canonical GitHub repo
 github_repo: cloudposse/terraform-aws-vpc
