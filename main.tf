@@ -8,12 +8,12 @@ resource "azurerm_subnet" "this" {
   virtual_network_name = var.virtual_network.name
   address_prefixes     = var.address_prefixes
   dynamic "delegation" {
-    for_each = var.subnet_delegation == null ? [] : toset([""])
+    for_each = var.subnet_delegations == null ? [] : var.subnet_delegations
     content {
-      name = var.subnet_delegation.name
+      name = delegation.value.name
       service_delegation {
-        name    = var.subnet_delegation.service_delegation.name
-        actions = var.subnet_delegation.service_delegation.actions
+        name    = delegation.value.service_delegation.name
+        actions = delegation.value.service_delegation.actions
       }
     }
   }

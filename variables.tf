@@ -47,14 +47,14 @@ variable "address_prefixes" {
   }
 }
 
-variable "subnet_delegation" {
-  type = object({
-    name = string
+variable "subnet_delegations" {
+  type = list(object({
+    name               = string
     service_delegation = object({
       name    = string
       actions = list(string)
     })
-  })
+  }))
   default     = null
   description = <<-EOT
     Details: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet#delegation
@@ -64,15 +64,19 @@ variable "subnet_delegation" {
       actions: The name of service to delegate to. Possible values include
   EOT
   validation {
-    condition     = var.subnet_delegation == null ? true : var.subnet_delegation.name != null
+    condition     = var.subnet_delegations == null ? true : alltrue([for d in var.subnet_delegations : (d != null)])
+    error_message = "`subnet_delegations`'s element cannot be null."
+  }
+  validation {
+    condition     = var.subnet_delegations == null ? true : alltrue([for n in var.subnet_delegations.*.name : (n != null)])
     error_message = "`subnet_delegation.name` is required when `subnet_delegation` is not null."
   }
   validation {
-    condition     = var.subnet_delegation == null ? true : var.subnet_delegation.service_delegation != null
+    condition     = var.subnet_delegations == null ? true : alltrue([for d in var.subnet_delegations.*.service_delegation : (d != null)])
     error_message = "`subnet_delegation.service_delegation` is required when `subnet_delegation` is not null."
   }
   validation {
-    condition     = var.subnet_delegation == null ? true : var.subnet_delegation.service_delegation.name != null
+    condition     = var.subnet_delegations == null ? true : alltrue([for n in var.subnet_delegations.*.service_delegation.name : (n != null)])
     error_message = "`subnet_delegation.service_delegation.name` is required when `subnet_delegation` is not null."
   }
 }
