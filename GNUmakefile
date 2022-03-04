@@ -15,6 +15,8 @@ tools:
 	go install mvdan.cc/gofumpt@latest
 	go install github.com/bflad/tfproviderlint/cmd/tfproviderlint@latest
 	go install github.com/yngveh/sprig-cli@latest
+	go install github.com/terraform-docs/terraform-docs@v0.16.0
+	go install github.com/hairyhenderson/gomplate/v3/cmd/gomplate@latest
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH || $$GOPATH)/bin v1.41.1
 	curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
