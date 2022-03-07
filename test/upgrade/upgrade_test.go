@@ -2,8 +2,9 @@ package upgrade
 
 import (
 	"fmt"
-	"github.com/gruntwork-io/terratest/modules/terraform"
 	"testing"
+
+	"github.com/gruntwork-io/terratest/modules/terraform"
 
 	test_helper "github.com/lonegunmanb/terraform-module-test-helper"
 )

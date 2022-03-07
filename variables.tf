@@ -49,7 +49,7 @@ variable "address_prefixes" {
 
 variable "subnet_delegations" {
   type = list(object({
-    name               = string
+    name = string
     service_delegation = object({
       name    = string
       actions = list(string)

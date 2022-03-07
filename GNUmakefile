@@ -62,7 +62,7 @@ checkovcheck:
 
 fmtcheck: tfvalidatecheck tffmtcheck gofmtcheck terrafmtcheck
 
-pr-check: fmtcheck lint checkovcheck
+pr-check: gencheck fmtcheck lint checkovcheck
 
 e2e-test:
 	./scripts/run-e2e-test.sh
@@ -89,12 +89,16 @@ depscheck:
 	@git diff --compact-summary --exit-code -- vendor || \
 		(echo; echo "Unexpected difference in vendor/ directory. Run 'go mod vendor' command or revert any go.mod/go.sum/vendor changes and commit."; exit 1)
 
+generate:
+	@echo "--> Generating doc"
+	@terraform-docs markdown table --output-file README.md --output-mode replace ./
+
 gencheck:
 	@echo "==> Generating..."
-	@make generate
+	@terraform-docs markdown table --output-file README-generated.md --output-mode replace ./
 	@echo "==> Comparing generated code to committed code..."
-	@git diff --compact-summary --exit-code -- ./ || \
-    		(echo; echo "Unexpected difference in generated code. Run 'make generate' to update the generated code and commit."; exit 1)
+	@diff -q README.md README-generated.md || \
+    		(echo; echo "Unexpected difference in generated document. Run 'make generate' to update the generated document and commit."; exit 1)
 
 whitespace:
 	@echo "==> Fixing source code with whitespace linter..."
