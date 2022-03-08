@@ -1,5 +1,5 @@
 ---
-name: Vendor Dependencies Check
+name: Pre Pull Request Check
 on:
   pull_request:
     types: ['opened', 'synchronize']
@@ -13,10 +13,9 @@ jobs:
   depscheck:
     runs-on: ubuntu-latest
     container:
-      image: tfmodule-testrunner:latest
+      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
     steps:
       - uses: actions/checkout@v2
       - run: |
           export PATH=$PATH:/go/bin:/usr/local/go/bin
           make pr-check
-#315b54708a70d492773087139284db49
