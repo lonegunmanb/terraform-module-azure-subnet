@@ -49,10 +49,10 @@ gofmtcheck:
 	@sh "$(CURDIR)/scripts/fumptcheck.sh"
 
 golint:
-	./scripts/run-golangci-lint.sh
+	@sh "$(CURDIR)/scripts/run-golangci-lint.sh"
 
 tflint:
-	./scripts/run-tflint.sh
+	@sh "$(CURDIR)/scripts/run-tflint.sh"
 
 lint: golint tflint
 
@@ -91,6 +91,7 @@ depscheck:
 
 generate:
 	@echo "--> Generating doc"
+	@rm -f .terraform.lock.hcl
 	@terraform-docs markdown table --output-file README.md --output-mode inject ./
 
 gencheck:

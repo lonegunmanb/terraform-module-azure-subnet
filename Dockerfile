@@ -3,12 +3,13 @@ FROM golang:${GOLANG_IMAGE_TAG}
 ARG TERRAFORM_VERSION=1.1.6
 ARG CONSUL_TEMPLATE_VERSION=0.27.2
 ARG TFLINT_AZURERM_VERSION=0.14.0
-WORKDIR /src
+ENV PATH=$PATH:$GOPATH/bin
 COPY GNUmakefile /src/GNUmakefile
 COPY scripts /src/scripts
 
-RUN apt update && \
-    apt install -y zip python3 pip jq && \
+RUN cd /src && \
+    apt update && \
+    apt install -y zip python3 pip jq coreutils && \
     make tools && \
     pip install checkov && \
     export ARCH=$(uname -m | sed 's/x86_64/amd64/g') && \
@@ -18,7 +19,8 @@ RUN apt update && \
 	mkdir -p ~/.tflint.d/plugins/github.com/terraform-linters/tflint-ruleset-azurerm/$TFLINT_AZURERM_VERSION && \
 	unzip -q -d ~/.tflint.d/plugins/github.com/terraform-linters/tflint-ruleset-azurerm/$TFLINT_AZURERM_VERSION /tmp/tflint-ruleset-azurerm.zip && \
 	rm -f /tmp/terraform.zip && \
-	rm -f /tmp/consul-template.zip && \
-    rm -f ~/.tflint.d/plugins/github.com/terraform-linters/tflint-ruleset-azurerm/$TFLINT_AZURERM_VERSION /tmp/tflint-ruleset-azurerm.zip && \
-    rm -rf /src
+    rm -f /tmp/tflint-ruleset-azurerm.zip && \
+    rm -rf /src && \
+    rm -rf $GOPATH/src && \
+    rm -rf $GOPATH/pkg/$ARCH
 

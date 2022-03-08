@@ -59,7 +59,7 @@ module "private" {
 }
 ```
 
-
+<!-- DO NOT REMOVE OR EDIT SECTION BELOW!!! -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -72,7 +72,7 @@ module "private" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 2.98.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 2.89.0 |
 
 ## Modules
 
@@ -124,10 +124,7 @@ No modules.
 
 ## Share the Love
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-aws-vpc)! (it helps us **a lot**)
-
-Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
-
+Like this project? Please give it a ★ on [our GitHub](https://github.com/lonegunmanb/terraform-module-azure-subnet)! (it helps us **a lot**)
 
 
 ## Related Projects
@@ -144,49 +141,7 @@ Check out these related projects.
 
 **Got a question?** We got answers.
 
-File a GitHub [issue](https://github.com/cloudposse/terraform-aws-vpc/issues), send us an [email][email] or join our [Slack Community][slack].
-
-[![README Commercial Support][readme_commercial_support_img]][readme_commercial_support_link]
-
-## DevOps Accelerator for Startups
-
-
-We are a [**DevOps Accelerator**][commercial_support]. We'll help you build your cloud infrastructure from the ground up so you can own it. Then we'll show you how to operate it and stick around for as long as you need us.
-
-[![Learn More](https://img.shields.io/badge/learn%20more-success.svg?style=for-the-badge)][commercial_support]
-
-Work directly with our team of DevOps experts via email, slack, and video conferencing.
-
-We deliver 10x the value for a fraction of the cost of a full-time engineer. Our track record is not even funny. If you want things done right and you need it done FAST, then we're your best bet.
-
-- **Reference Architecture.** You'll get everything you need from the ground up built using 100% infrastructure as code.
-- **Release Engineering.** You'll have end-to-end CI/CD with unlimited staging environments.
-- **Site Reliability Engineering.** You'll have total visibility into your apps and microservices.
-- **Security Baseline.** You'll have built-in governance with accountability and audit logs for all changes.
-- **GitOps.** You'll be able to operate your infrastructure via Pull Requests.
-- **Training.** You'll receive hands-on training so your team can operate what we build.
-- **Questions.** You'll have a direct line of communication between our teams via a Shared Slack channel.
-- **Troubleshooting.** You'll get help to triage when things aren't working.
-- **Code Reviews.** You'll receive constructive feedback on Pull Requests.
-- **Bug Fixes.** We'll rapidly work with you to fix any bugs in our projects.
-
-## Slack Community
-
-Join our [Open Source Community][slack] on Slack. It's **FREE** for everyone! Our "SweetOps" community is where you get to talk with others who share a similar vision for how to rollout and manage infrastructure. This is the best place to talk shop, ask questions, solicit feedback, and work together as a community to build totally *sweet* infrastructure.
-
-## Discourse Forums
-
-Participate in our [Discourse Forums][discourse]. Here you'll find answers to commonly asked questions. Most questions will be related to the enormous number of projects we support on our GitHub. Come here to collaborate on answers, find solutions, and get ideas about the products and services we value. It only takes a minute to get started! Just sign in with SSO using your GitHub account.
-
-## Newsletter
-
-Sign up for [our newsletter][newsletter] that covers everything on our technology radar.  Receive updates on what we're up to on GitHub as well as awesome new projects we discover.
-
-## Office Hours
-
-[Join us every Wednesday via Zoom][office_hours] for our weekly "Lunch & Learn" sessions. It's **FREE** for everyone!
-
-[![zoom](https://img.cloudposse.com/fit-in/200x200/https://cloudposse.com/wp-content/uploads/2019/08/Powered-by-Zoom.png")][office_hours]
+File a GitHub [issue](https://github.com/lonegunmanb/terraform-module-azure-subnet/issues), send us an [email][email] or join our [Slack Community][slack].
 
 ## Contributing
 
