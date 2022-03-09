@@ -40,7 +40,7 @@ It's 100% Open Source and licensed under the [MIT](LICENSE).
 
 ```hcl
 module "private" {
-  source              = "lonegunmanb/terraform-module-azure-subnet"
+  source               = "lonegunmanb/terraform-module-azure-subnet"
   address_prefixes    = ["10.0.0.0/24"]
   resource_group_name = azurerm_resource_group.rg.name
   subnet_name         = "${module.label.id}-private"
