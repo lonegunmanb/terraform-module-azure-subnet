@@ -8,9 +8,10 @@ on:
       - '**.go'
       - '**.tf'
       - '.github/workflows/**'
+      - '**.md'
 
 jobs:
-  depscheck:
+  prepr-check:
     runs-on: ubuntu-latest
     container:
       image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
