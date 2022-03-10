@@ -1,0 +1,23 @@
+---
+name: Pre Pull Request Check
+on:
+  pull_request:
+    types: [ 'opened', 'synchronize' ]
+
+jobs:
+  acc-tests:
+    needs: [ prepr-check ]
+    runs-on: ubuntu-latest
+    environment:
+      name:
+    container:
+      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
+      env:
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          make e2e-test
