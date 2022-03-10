@@ -2,10 +2,6 @@
 #
 #}
 
-variable "unused_variable" {
-  default = null
-}
-
 resource "azurerm_subnet" "this" {
   name                 = var.subnet_name
   resource_group_name  = var.resource_group_name
