@@ -72,7 +72,7 @@ module "private" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 2.89.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | = 2.89.0 |
 
 ## Modules
 
