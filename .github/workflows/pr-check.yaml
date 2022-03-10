@@ -17,8 +17,6 @@ jobs:
       image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
       - run: |
           export PATH=$PATH:/go/bin:/usr/local/go/bin
           make pr-check
