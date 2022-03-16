@@ -11,7 +11,7 @@ jobs:
       name:
     container:
       image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
-      env:
+      options: --user root --rm --runtime=kata-runtime
     steps:
       - uses: actions/checkout@v3
       - run: |
