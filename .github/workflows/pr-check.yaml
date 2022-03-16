@@ -12,9 +12,10 @@ on:
 
 jobs:
   prepr-check:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container:
       image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
+      options: --rm --runtime=kata-runtime
     steps:
       - uses: actions/checkout@v3
       - run: |
