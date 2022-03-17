@@ -13,15 +13,14 @@ on:
 jobs:
   prepr-check:
     runs-on: self-hosted
-    container:
-      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
-      options: --rm --runtime=runsc
+#    container:
+#      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
+#      options: --rm --runtime=runsc
     steps:
-      - name: modifydns
-        run: echo 168.63.129.16 >> /etc/resolv.conf
       - name: checkout
         uses: actions/checkout@v3
       - name: prcheck
         run: |
-          export PATH=$PATH:/go/bin:/usr/local/go/bin
-          make pr-check
+#          export PATH=$PATH:/go/bin:/usr/local/go/bin
+#          make pr-check
+           ls
