@@ -15,7 +15,7 @@ jobs:
     runs-on: self-hosted
     container:
       image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
-      options: --user root --rm --runtime=kata-runtime
+      options: --rm --runtime=kata-runtime
     steps:
       - uses: actions/checkout@v3
       - run: |
