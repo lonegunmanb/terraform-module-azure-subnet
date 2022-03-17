@@ -21,4 +21,4 @@ jobs:
         uses: actions/checkout@v3
       - name: prcheck
         run: |
-           docker run --rm --runtime=runc -w /src -v $(pwd):/src testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin --cpus 2 -m 1024m make pr-check"
+           docker run --rm --runtime=runc -w /src -v $(pwd):/src --cpus 2 -m 1024m testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin make pr-check"
