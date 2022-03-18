@@ -1,24 +1,24 @@
-name: E2E Test
-on:
-  pull_request:
-    types: [ 'opened', 'synchronize' ]
-    paths:
-      - '.github/**'
-      - '**.go'
-      - '**.tf'
-      - '.github/workflows/**'
-      - '**.md'
-
-jobs:
-  acc-tests:
-    needs: [ prepr-check ]
-    runs-on: self-hosted
-    environment:
-      name: acctests
-    container:
-      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
-      options: --rm --runtime=runc
-    steps:
-      - uses: actions/checkout@v3
-      - run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make e2e-test
+#name: E2E Test
+#on:
+#  pull_request:
+#    types: [ 'opened', 'synchronize' ]
+#    paths:
+#      - '.github/**'
+#      - '**.go'
+#      - '**.tf'
+#      - '.github/workflows/**'
+#      - '**.md'
+#
+#jobs:
+#  acc-tests:
+#    needs: [ prepr-check ]
+#    runs-on: self-hosted
+#    environment:
+#      name: acctests
+#    container:
+#      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
+#      options: --rm --runtime=runc
+#    steps:
+#      - uses: actions/checkout@v3
+#      - run: |
+#          PATH=$PATH:/go/bin:/usr/local/go/bin make e2e-test
