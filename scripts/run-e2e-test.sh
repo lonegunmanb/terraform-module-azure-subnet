@@ -4,5 +4,5 @@ echo "==> Running E2E Tests..."
 set -e
 cd ./test/e2e
 go mod tidy
-sh ./render_override.sh
+#sh ./render_override.sh
 go test -v -p=1 -timeout=120m ./...
