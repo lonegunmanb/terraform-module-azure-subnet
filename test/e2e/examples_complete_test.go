@@ -1,29 +1,16 @@
 package e2e_test
 
 import (
+	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	test_helper "github.com/lonegunmanb/terraform-module-test-helper"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestExamplesComplete(t *testing.T) {
-	output := test_helper.RunE2ETest(t, "../../", "examples/complete", terraform.Options{
-		Upgrade: true,
-	})
-
-	privateSubnetId, ok := output["private_subnet_id"].(string)
-	assert.True(t, ok)
-	assert.NotEqual(t, "", privateSubnetId)
-}
-
-func TestExamplesComplete2(t *testing.T) {
-	output := test_helper.RunE2ETest(t, "../../", "examples/complete2", terraform.Options{
-		Upgrade: true,
-	})
-
-	privateSubnetId, ok := output["private_subnet_id"].(string)
-	assert.True(t, ok)
-	assert.NotEqual(t, "", privateSubnetId)
+	tmpDir := test_structure.CopyTerraformFolderToTemp(t, "../../", "test/e2e")
+	option := terraform.Options{}
+	option.TerraformDir = tmpDir
+	defer terraform.Destroy(t, &option)
+	terraform.InitAndApplyAndIdempotent(t, &option)
 }
