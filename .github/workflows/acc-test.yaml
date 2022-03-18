@@ -14,10 +14,7 @@ jobs:
     runs-on: self-hosted
     environment:
       name: acctests
-    container:
-      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
-      options: --rm --runtime=runc
     steps:
       - uses: actions/checkout@v3
       - run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make e2e-test
+          docker run --rm --runtime=runc -v $(pwd):/src -w /src testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin make e2e-test"
