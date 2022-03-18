@@ -65,10 +65,10 @@ fmtcheck: tfvalidatecheck tffmtcheck gofmtcheck terrafmtcheck
 pr-check: gencheck fmtcheck lint checkovcheck
 
 e2e-test:
-	./scripts/run-e2e-test.sh
+	@sh "$(CURDIR)/scripts/run-e2e-test.sh"
 
 version-upgrade-test:
-	./scripts/version-upgrade-test.sh
+	@sh "$(CURDIR)/scripts/version-upgrade-test.sh"
 
 terrafmt:
 	@echo "==> Fixing test and document terraform blocks code with terrafmt..."
