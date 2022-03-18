@@ -12,13 +12,13 @@ on:
 
 jobs:
   prepr-check:
-    runs-on: self-hosted
-#    container:
-#      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
-#      options: --rm --runtime=runsc
+    runs-on: ubuntu-latest
+    container:
+      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
+      options: --rm
     steps:
       - name: checkout
         uses: actions/checkout@v3
       - name: prcheck
         run: |
-           docker run --rm --runtime=runc -w /src -v $(pwd):/src --cpus 2 -m 1024m testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin make pr-check"
+          PATH=$PATH:/go/bin:/usr/local/go/bin make pr-check
