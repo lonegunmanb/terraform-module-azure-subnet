@@ -19,4 +19,4 @@ jobs:
       - run: |
           export ARM_SUBSCRIPTION_ID=$(curl -s -H Metadata:true "http://169.254.169.254/metadata/instance?api-version=2017-08-01" | jq -r '.compute | .subscriptionId')
           export ARM_TENANT_ID=$(az login --identity | jq -r '.[0] | .tenantId')
-          docker run --rm --runtime=kata-runtime --cpus=2 --memory=1024m -e ARM_SUBSCRIPTION_ID -e ARM_TENANT_ID -e ARM_USE_MSI=true -v $(pwd):/src -w /src testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin make e2e-test"
+          docker run --rm --runtime=kata-runtime --cpus=2 --memory=1024m -e ARM_SUBSCRIPTION_ID -e ARM_TENANT_ID -e ARM_USE_MSI=true -v $(pwd):/src -w /src testrunner.azurecr.io/testrunner/tfmodule-testrunner:debian sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin make e2e-test"
