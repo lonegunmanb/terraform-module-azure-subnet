@@ -1,0 +1,18 @@
+ARG GOLANG_IMAGE_TAG=1.17
+ARG GOLANG_IMAGE_ALPINE_TAG=1.17.8-alpine3.15
+FROM golang:${GOLANG_IMAGE_TAG} as build
+RUN go install github.com/yngveh/sprig-cli@latest
+
+FROM golang:${GOLANG_IMAGE_ALPINE_TAG} as runner
+ARG TERRAFORM_VERSION=1.1.6
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+COPY --from=build $GOPATH/bin $GOPATH/bin
+
+RUN apk add curl zip make git && \
+    mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 && \
+    export ARCH=$(uname -m | sed 's/x86_64/amd64/g') && \
+    curl '-#' -fL -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_${TERRAFORM_VERSION}_linux_$ARCH.zip && \
+	unzip -q -d /bin/ /tmp/terraform.zip && \
+	rm -f /tmp/terraform.zip && \
+    apk del curl zip
