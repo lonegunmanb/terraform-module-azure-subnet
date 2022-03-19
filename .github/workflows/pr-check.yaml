@@ -14,11 +14,32 @@ jobs:
   prepr-check:
     runs-on: ubuntu-latest
     container:
-      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:latest
+      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:debian
       options: --rm
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: prcheck
+      - name: gencheck
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make pr-check
+          PATH=$PATH:/go/bin:/usr/local/go/bin make gencheck
+      - name: tfvalidatecheck
+        run: |
+          PATH=$PATH:/go/bin:/usr/local/go/bin make tfvalidatecheck
+      - name: tffmtcheck
+        run: |
+          PATH=$PATH:/go/bin:/usr/local/go/bin make tffmtcheck
+      - name: gofmtcheck
+        run: |
+          PATH=$PATH:/go/bin:/usr/local/go/bin make gofmtcheck
+      - name: terrafmtcheck
+        run: |
+          PATH=$PATH:/go/bin:/usr/local/go/bin make terrafmtcheck
+      - name: golint
+        run: |
+          PATH=$PATH:/go/bin:/usr/local/go/bin make golint
+      - name: tflint
+        run: |
+          PATH=$PATH:/go/bin:/usr/local/go/bin make tflint
+      - name: checkovcheck
+        run: |
+          PATH=$PATH:/go/bin:/usr/local/go/bin make checkovcheck

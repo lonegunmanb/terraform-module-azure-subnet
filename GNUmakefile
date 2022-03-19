@@ -54,7 +54,7 @@ golint:
 tflint:
 	@sh "$(CURDIR)/scripts/run-tflint.sh"
 
-lint: tflint
+lint: golint tflint
 
 checkovcheck:
 	@echo "==> Checking Terraform code with BridgeCrew Checkov"
