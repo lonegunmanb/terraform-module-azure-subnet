@@ -1,6 +1,6 @@
-#resource random_pet fail_test {
-#
-#}
+resource random_pet fail_test {
+
+}
 
 resource "azurerm_subnet" "this" {
   name                 = var.subnet_name
