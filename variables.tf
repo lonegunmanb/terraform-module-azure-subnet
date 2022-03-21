@@ -1,6 +1,6 @@
 variable "subnet_name" {
   type        = string
-  description = "The name of the subnet. Changing this forces a new resource to be created."
+  description = "the name of the subnet. Changing this forces a new resource to be created."
   nullable    = false
 }
 
