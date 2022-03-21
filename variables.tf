@@ -1,3 +1,9 @@
+variable "unused_variable" {
+  type        = string
+  description = "This is an unused variable and should be prevented by tflint."
+  default     = ""
+}
+
 variable "subnet_name" {
   type        = string
   description = "The name of the subnet. Changing this forces a new resource to be created."
