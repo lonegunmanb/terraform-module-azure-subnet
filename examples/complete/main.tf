@@ -2,7 +2,7 @@ provider "azurerm" {
   features {}
 }
 
-resource "random_pet" "example" {}
+resource "random_pet" "example" {
 
 module "label" {
   source         = "registry.terraform.io/cloudposse/label/null"
