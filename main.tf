@@ -1,4 +1,4 @@
-resource random_pet fail_test {
+resource "random_pet" "fail_test" {
 
 }
 
