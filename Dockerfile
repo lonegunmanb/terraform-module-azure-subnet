@@ -15,7 +15,7 @@ ENV TFLINT_PLUGIN_DIR /tflint
 COPY --from=build $GOPATH/bin $GOPATH/bin
 COPY --from=build /usr/local/bin/tflint /bin/tflint
 
-RUN apt update && apt install -y curl zip python3 pip coreutils && \
+RUN apt update && apt install -y curl zip python3 pip coreutils jq && \
     pip install checkov && \
     export ARCH=$(uname -m | sed 's/x86_64/amd64/g') && \
     curl '-#' -fL -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_${TERRAFORM_VERSION}_linux_$ARCH.zip && \
