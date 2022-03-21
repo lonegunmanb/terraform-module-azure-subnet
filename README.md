@@ -118,6 +118,7 @@ No modules.
 | <a name="output_security_group_id"></a> [security\_group\_id](#output\_security\_group\_id) | The id of the attached network security group. |
 | <a name="output_security_group_name"></a> [security\_group\_name](#output\_security\_group\_name) | The name of the attached network security group. |
 | <a name="output_subnet_id"></a> [subnet\_id](#output\_subnet\_id) | The subnet ID. |
+| <a name="output_subnet_name"></a> [subnet\_name](#output\_subnet\_name) | The subnet name |
 <!-- END_TF_DOCS -->
 
 
