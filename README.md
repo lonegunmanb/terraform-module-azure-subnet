@@ -67,13 +67,14 @@ module "private" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 2.89.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | 3.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 2.89.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.1.0 |
 
 ## Modules
 
@@ -89,7 +90,7 @@ No modules.
 | [azurerm_subnet_nat_gateway_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) | resource |
 | [azurerm_subnet_network_security_group_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource |
 | [azurerm_subnet_route_table_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_route_table_association) | resource |
-| [random_pet.fail_test](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
+| [random_pet.fail_test](https://registry.terraform.io/providers/hashicorp/random/3.1.0/docs/resources/pet) | resource |
 
 ## Inputs
 
