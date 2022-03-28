@@ -14,6 +14,9 @@ jobs:
   prepr-check:
     runs-on: ubuntu-latest
     steps:
+      - name: it should fail
+        run: |
+          go version
       - name: setup go
         uses: actions/setup-go@v2
         with:
