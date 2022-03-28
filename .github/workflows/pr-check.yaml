@@ -13,33 +13,40 @@ on:
 jobs:
   prepr-check:
     runs-on: ubuntu-latest
-    container:
-      image: testrunner.azurecr.io/testrunner/tfmodule-testrunner:debian
-      options: --rm
     steps:
+      - name: setup go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.18'
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.7
       - name: checkout
         uses: actions/checkout@v3
+      - name: install tools
+        run: |
+          make tools
       - name: gencheck
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make gencheck
+          make gencheck
       - name: tfvalidatecheck
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make tfvalidatecheck
+          make tfvalidatecheck
       - name: tffmtcheck
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make tffmtcheck
+          make tffmtcheck
       - name: gofmtcheck
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make gofmtcheck
+          make gofmtcheck
       - name: terrafmtcheck
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make terrafmtcheck
+          make terrafmtcheck
       - name: golint
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make golint
+          make golint
       - name: tflint
         run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make tflint
-      - name: checkovcheck
-        run: |
-          PATH=$PATH:/go/bin:/usr/local/go/bin make checkovcheck
+          make tflint
+#      - name: checkovcheck
+#        run: |
+#          PATH=$PATH:/go/bin:/usr/local/go/bin make checkovcheck
