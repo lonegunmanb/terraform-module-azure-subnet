@@ -37,7 +37,7 @@ It's 100% Open Source and licensed under the [MIT](LICENSE).
 
 
 ## Examples
-
+Here is the example:
 ```hcl
 module "private" {
   source              = "lonegunmanb/terraform-module-azure-subnet"
