@@ -21,6 +21,7 @@ COPY --from=build /usr/local/bin/tflint /bin/tflint
 
 RUN apt update && apt install -y curl zip python3 pip coreutils jq && \
     pip install checkov && \
+    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash && \
     export ARCH=$(uname -m | sed 's/x86_64/amd64/g') && \
     curl '-#' -fL -o /tmp/go.tar.gz https://go.dev/dl/go${GO_VERSION}.linux-$ARCH.tar.gz && \
     tar -C /usr/local -xzf /tmp/go.tar.gz && \

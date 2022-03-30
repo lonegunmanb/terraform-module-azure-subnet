@@ -18,13 +18,11 @@ jobs:
       - uses: actions/checkout@v3
       - name: e2e test
         run: |
-          az login --identity
-          curl -s -H Metadata:true "http://169.254.169.254/metadata/instance?api-version=2017-08-01"
-          export ARM_SUBSCRIPTION_ID=$(curl -s -H Metadata:true "http://169.254.169.254/metadata/instance?api-version=2017-08-01" | jq -r '.compute | .subscriptionId')
+          export ARM_SUBSCRIPTION_ID=$(az login --identity | jq -r '.[0] | .id')
           export ARM_TENANT_ID=$(az login --identity | jq -r '.[0] | .tenantId')
           docker run --rm --runtime=kata-runtime --cpus=4 --memory=2048m -e ARM_SUBSCRIPTION_ID -e ARM_TENANT_ID -e ARM_USE_MSI=true -v $(pwd):/src -w /src testrunner.azurecr.io/testrunner/tfmodule-e2e-runner:alpine sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin make e2e-test"
       - name: version upgrade test
         run: |
-          export ARM_SUBSCRIPTION_ID=$(curl -s -H Metadata:true "http://169.254.169.254/metadata/instance?api-version=2017-08-01" | jq -r '.compute | .subscriptionId')
+          export ARM_SUBSCRIPTION_ID=$(az login --identity | jq -r '.[0] | .id')
           export ARM_TENANT_ID=$(az login --identity | jq -r '.[0] | .tenantId')
           docker run --rm --runtime=kata-runtime --cpus=4 --memory=2048m -e ARM_SUBSCRIPTION_ID -e ARM_TENANT_ID -e ARM_USE_MSI=true -v $(pwd):/src -w /src testrunner.azurecr.io/testrunner/tfmodule-e2e-runner:alpine sh -c "PATH=$PATH:/go/bin:/usr/local/go/bin make version-upgrade-test"
