@@ -7,6 +7,7 @@ on:
       - '.github/**'
       - '**.go'
       - '**.tf'
+      - '.github/workflows/**'
       - '**.md'
 
 jobs:
@@ -17,6 +18,7 @@ jobs:
         uses: actions/checkout@v3
       - name: gencheck
         run: |
+          ps aux
           make gencheck
       - name: tfvalidatecheck
         run: |
