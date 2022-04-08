@@ -7,7 +7,6 @@ on:
       - '.github/**'
       - '**.go'
       - '**.tf'
-      - '.github/workflows/**'
       - '**.md'
 
 jobs:
