@@ -9,21 +9,21 @@ import (
 )
 
 func TestExamplesComplete(t *testing.T) {
-	output := test_helper.RunE2ETest(t, "../../", "examples/complete", terraform.Options{
+	test_helper.RunE2ETest(t, "../../", "examples/complete", terraform.Options{
 		Upgrade: true,
+	}, func(t *testing.T, output test_helper.TerraformOutput) {
+		privateSubnetId, ok := output["private_subnet_id"].(string)
+		assert.True(t, ok)
+		assert.NotEqual(t, "", privateSubnetId)
 	})
-
-	privateSubnetId, ok := output["private_subnet_id"].(string)
-	assert.True(t, ok)
-	assert.NotEqual(t, "", privateSubnetId)
 }
 
 func TestExamplesComplete2(t *testing.T) {
-	output := test_helper.RunE2ETest(t, "../../", "examples/complete2", terraform.Options{
+	test_helper.RunE2ETest(t, "../../", "examples/complete2", terraform.Options{
 		Upgrade: true,
+	}, func(t *testing.T, output test_helper.TerraformOutput) {
+		privateSubnetId, ok := output["private_subnet_id"].(string)
+		assert.True(t, ok)
+		assert.NotEqual(t, "", privateSubnetId)
 	})
-
-	privateSubnetId, ok := output["private_subnet_id"].(string)
-	assert.True(t, ok)
-	assert.NotEqual(t, "", privateSubnetId)
 }
