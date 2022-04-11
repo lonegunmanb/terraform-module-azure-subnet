@@ -2,7 +2,7 @@
 
 # Check gofmt
 echo "==> Checking that code complies with tflint requirements..."
-
+tflint --init
 files=$(find * -maxdepth 1 -type f -name "*.tf" | grep -v ".terraform")
 error=false
 
