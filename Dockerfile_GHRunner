@@ -16,6 +16,7 @@ ENV TFLINT_PLUGIN_DIR /tflint
 ENV GOPATH=/go
 ENV PATH=$PATH:/usr/local/go/bin
 ENV EPHEMERAL=true
+ENV DISABLE_AUTO_UPDATE=true
 COPY --from=build /go/bin /usr/local/go/bin
 COPY --from=build /usr/local/bin/tflint /bin/tflint
 
