@@ -22,9 +22,6 @@ jobs:
       - name: make tools
         run: |
           make tools
-      - name: tflint
-        run: |
-          make tflint
       - name: tfvalidatecheck
         run: |
           make tfvalidatecheck
@@ -40,6 +37,9 @@ jobs:
       - name: golint
         run: |
           make golint
+      - name: tflint
+        run: |
+          make tflint
 #      - name: checkovcheck
 #        run: |
 #          PATH=$PATH:/go/bin:/usr/local/go/bin make checkovcheck
