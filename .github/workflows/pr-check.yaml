@@ -22,9 +22,6 @@ jobs:
       - name: make tools
         run: |
           make tools
-      - name: gencheck
-        run: |
-          make gencheck
       - name: tfvalidatecheck
         run: |
           make tfvalidatecheck
