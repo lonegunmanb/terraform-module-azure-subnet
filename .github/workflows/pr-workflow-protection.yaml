@@ -1,4 +1,4 @@
-name: Pre Pull Request Check
+name: Protect Workflow (Pull Request Cannot Touch Github Workflow)
 on:
   pull_request:
     types: ['opened', 'synchronize']
