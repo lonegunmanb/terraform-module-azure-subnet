@@ -1,4 +1,4 @@
-name: Protect Workflow (Pull Request Cannot Touch Github Workflow)
+name: DO NOT MERGE, ATTEMPT SABOTAGE ON WORKFLOW FROM PULL REQUEST DETECTED!!!
 on:
   pull_request:
     types: ['opened', 'synchronize']
