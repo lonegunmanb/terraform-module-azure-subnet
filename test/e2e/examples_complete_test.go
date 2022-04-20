@@ -9,7 +9,7 @@ import (
 )
 
 func TestExamplesComplete(t *testing.T) {
-	test_helper.RunE2ETest(t, "../../", "examples/complete", terraform.Options{
+		test_helper.RunE2ETest(t, "../../", "examples/complete", terraform.Options{
 		Upgrade: true,
 	}, func(t *testing.T, output test_helper.TerraformOutput) {
 		privateSubnetId, ok := output["private_subnet_id"].(string)
