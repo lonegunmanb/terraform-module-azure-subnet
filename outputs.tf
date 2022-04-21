@@ -13,6 +13,11 @@ output "subnet_id" {
   value       = azurerm_subnet.this.id
 }
 
+output "subnet_name" {
+  description = "The subnet name"
+  value       = azurerm_subnet.this.name
+}
+
 output "route_table_id" {
   description = "The id of the attached route table."
   value       = local.route_table_id
