@@ -18,6 +18,7 @@ tools:
 	go install github.com/terraform-docs/terraform-docs@v0.16.0
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH || $$GOPATH)/bin v1.45.2
 	export TFLINT_VERSION=v0.34.1 && curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+	npm install markdown-table-formatter -g
 
 fmt:
 	@echo "==> Fixing source code with gofmt..."
@@ -93,11 +94,13 @@ generate:
 	@echo "--> Generating doc"
 	@rm -f .terraform.lock.hcl
 	@terraform-docs markdown table --output-file README.md --output-mode inject ./
+	@markdown-table-formatter README.md
 
 gencheck:
 	@echo "==> Generating..."
 	@cp README.md README-generated.md
 	@terraform-docs markdown table --output-file README-generated.md --output-mode inject ./
+	@markdown-table-formatter README-generated.md
 	@echo "==> Comparing generated code to committed code..."
 	@diff -q README.md README-generated.md || \
     		(echo; echo "Unexpected difference in generated document. Run 'make generate' to update the generated document and commit."; exit 1)
