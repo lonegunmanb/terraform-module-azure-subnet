@@ -17,6 +17,7 @@ tools:
 	go install github.com/terraform-docs/terraform-docs@v0.16.0
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH || $$GOPATH)/bin v1.45.2
 	export TFLINT_VERSION=v0.34.1 && curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+	npm install markdown-table-formatter -g
 
 fmt:
 	@echo "==> Fixing source code with gofmt..."
