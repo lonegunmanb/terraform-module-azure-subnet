@@ -1,6 +1,5 @@
 ARG GOLANG_IMAGE_TAG=1.18
 FROM golang:${GOLANG_IMAGE_TAG} as build
-RUN go install github.com/yngveh/sprig-cli@latest
 
 FROM myoung34/github-runner:latest as runner
 ARG TERRAFORM_VERSION=1.1.6
