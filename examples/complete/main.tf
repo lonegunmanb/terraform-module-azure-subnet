@@ -10,7 +10,7 @@ module "label" {
   name           = "subnet-module-${random_pet.example.id}"
   delimiter      = "-"
   label_key_case = "lower"
-  tags           = {
+  tags = {
     author = "example"
   }
 }
@@ -58,7 +58,7 @@ module "private" {
   address_prefixes    = ["10.0.0.0/24"]
   resource_group_name = azurerm_resource_group.rg.name
   subnet_name         = "${module.label.id}-private"
-  virtual_network     = {
+  virtual_network = {
     id       = azurerm_virtual_network.vnet.id
     name     = azurerm_virtual_network.vnet.name
     location = azurerm_virtual_network.vnet.location
@@ -105,7 +105,7 @@ module "public" {
   address_prefixes    = ["10.0.1.0/24"]
   resource_group_name = azurerm_resource_group.rg.name
   subnet_name         = "${module.label.id}-public"
-  virtual_network     = {
+  virtual_network = {
     id       = azurerm_virtual_network.vnet.id
     name     = azurerm_virtual_network.vnet.name
     location = azurerm_virtual_network.vnet.location
