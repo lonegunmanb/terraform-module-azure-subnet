@@ -146,10 +146,10 @@ resource "azurerm_network_security_rule" "allow_internet_from_public" {
   destination_port_range      = "*"
 }
 
-resource "azurerm_network_security_rule" "no_ssh_rdp_from_internet_to_public" {
-  access                      = "Deny"
+resource "azurerm_network_security_rule" "ssh_rdp_from_internet_to_public" {
+  access                      = "Allow"
   direction                   = "Inbound"
-  name                        = "no_ssh_rdp_from_internet_to_public"
+  name                        = "ssh_rdp_from_internet_to_public"
   network_security_group_name = module.public.security_group_name
   priority                    = 4094
   protocol                    = "*"
