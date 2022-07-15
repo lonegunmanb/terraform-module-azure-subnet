@@ -1,4 +1,4 @@
-ARG GOLANG_IMAGE_TAG=1.18
+ARG GOLANG_IMAGE_TAG=1.17
 FROM golang:${GOLANG_IMAGE_TAG} as build
 COPY GNUmakefile /src/GNUmakefile
 COPY scripts /src/scripts
@@ -8,8 +8,8 @@ RUN cd /src && \
     make tools
 
 FROM golang:${GOLANG_IMAGE_TAG} as runner
-ARG TERRAFORM_VERSION=1.1.9
-ARG TFLINT_AZURERM_VERSION=0.14.0
+ARG TERRAFORM_VERSION=1.2.4
+ARG TFLINT_AZURERM_VERSION=0.16.0
 ENV TFLINT_PLUGIN_DIR /tflint
 COPY --from=build $GOPATH/bin $GOPATH/bin
 COPY --from=build /usr/local/bin/tflint /bin/tflint
