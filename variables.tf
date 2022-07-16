@@ -41,6 +41,7 @@ variable "address_prefixes" {
   type        = list(string)
   description = "The address prefixes to use for the subnet."
   nullable    = false
+  default     = ["10.0.0.0/16"]
   validation {
     condition     = length(var.address_prefixes) > 0
     error_message = "`address_prefixes` requires 1 item minimum, 0 got."
